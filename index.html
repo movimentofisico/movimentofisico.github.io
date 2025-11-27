@@ -1,1 +1,343 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>MOVIMENTO FISICO DI RIVOLUZIONE UMANA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --red: #b30000;
+      --dark-red: #5a0000;
+      --beige: #f4e2c6;
+      --black: #111111;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #d91e1e 0%, var(--red) 40%, var(--dark-red) 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px;
+      color: var(--beige);
+    }
+
+    .page {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      border: 3px solid var(--beige);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+      padding: 24px 20px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(135deg, rgba(255,255,255,0.08) 0, transparent 30%, transparent 70%, rgba(0,0,0,0.2) 100%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4) 1px, transparent 1px, transparent 3px);
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      letter-spacing: 0.18em;
+      margin-bottom: 6px;
+    }
+
+    header h2 {
+      font-size: 1.2rem;
+      letter-spacing: 0.14em;
+      color: #ffd8a3;
+      margin-bottom: 8px;
+    }
+
+    header h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      color: #ffb870;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--beige), transparent);
+      margin: 18px 0;
+    }
+
+    .manifesto {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      text-align: left;
+      color: #f7e8cf;
+    }
+
+    .manifesto strong {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .manifesto p + p {
+      margin-top: 10px;
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: #e0cba3;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    .comments-section {
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(244, 226, 198, 0.4);
+    }
+
+    .comments-section h4 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+      color: #ffd8a3;
+    }
+
+    .comments-section p.small {
+      font-size: 0.8rem;
+      color: #e0cba3;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(244, 226, 198, 0.6);
+      color: var(--beige);
+      padding: 8px;
+      font-size: 0.85rem;
+      resize: vertical;
+      margin-bottom: 8px;
+    }
+
+    textarea::placeholder {
+      color: rgba(244, 226, 198, 0.5);
+    }
+
+    button {
+      background: var(--beige);
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      color: var(--black);
+      font-weight: bold;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+    }
+
+    button:hover {
+      background: #ffe4ba;
+    }
+
+    .comments-list {
+      margin-top: 12px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .comment {
+      background: rgba(20, 20, 20, 0.9);
+      border-left: 3px solid var(--beige);
+      padding: 8px 8px 6px;
+      margin-bottom: 8px;
+      font-size: 0.83rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .comment time {
+      display: block;
+      font-size: 0.7rem;
+      color: #c7b396;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+
+    footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #e0cba3;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 18px 14px 24px;
+      }
+      header h1 {
+        font-size: 1.1rem;
+      }
+      header h2 {
+        font-size: 1rem;
+      }
+      header h3 {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="content">
+      <header>
+        <h1>MOVIMENTO FISICO DI RIVOLUZIONE UMANA</h1>
+        <h2>NON SEI SOLO</h2>
+        <h3>NESSUNO BRUCIA IN SILENZIO</h3>
+      </header>
+
+      <div class="divider"></div>
+
+      <section class="manifesto">
+        <p>
+          <strong>L'INFERNO NON È DOVE SOFFRI.</strong><br />
+          È DOVE NON CONTI NIENTE, NEPPURE PER TE STESSO.
+        </p>
+        <p>
+          Non sei solo. Ci sono altri come te. Stesso dolore, stessa lotta.
+          Guardati attorno, sentiti forte, diffondi il messaggio.
+        </p>
+      </section>
+
+      <p class="note">
+        Qui puoi lasciare un messaggio anonimo. Nessun nome, nessun giudizio. Le parolacce vengono coperte
+        automaticamente con asterischi: conta la voce, non l'insulto.
+      </p>
+
+      <section class="comments-section">
+        <h4>MESSAGGI DAL FRONTE UMANO</h4>
+        <p class="small">
+          Scrivi quello che senti. Non firmarti. Ogni parola è una prova che non stai bruciando da solo.
+        </p>
+
+        <textarea id="messageInput" placeholder="Scrivi qui il tuo messaggio anonimo..."></textarea>
+        <button id="sendButton">Invia messaggio</button>
+
+        <div class="comments-list" id="commentsList"></div>
+      </section>
+
+      <footer>
+        MOVIMENTO FISICO DI RIVOLUZIONE UMANA
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    const badWords = [
+      "cazzo","cazzi","merda","stronzo","stronzi","troia","troie","puttana","puttane",
+      "vaffanculo","vaffanulo","coglione","coglioni","testa di cazzo","bastardo","bastardi"
+    ];
+
+    const STORAGE_KEY = "mf_commenti_anonimi_v1";
+
+    function censor(text) {
+      let censored = text;
+      badWords.forEach(word => {
+        const pattern = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+        censored = censored.replace(pattern, match => "*".repeat(match.length));
+      });
+      return censored;
+    }
+
+    function loadComments() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        return JSON.parse(raw);
+      } catch (e) {
+        console.error("Errore nel leggere i commenti", e);
+        return [];
+      }
+    }
+
+    function saveComments(comments) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
+      } catch (e) {
+        console.error("Errore nel salvare i commenti", e);
+      }
+    }
+
+    function renderComments() {
+      const list = document.getElementById("commentsList");
+      list.innerHTML = "";
+      const comments = loadComments();
+      comments.forEach(comment => {
+        const div = document.createElement("div");
+        div.className = "comment";
+        div.textContent = comment.text;
+        const time = document.createElement("time");
+        time.textContent = comment.date;
+        div.appendChild(time);
+        list.appendChild(div);
+      });
+    }
+
+    function formatDate(d) {
+      const day = String(d.getDate()).padStart(2, "0");
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const year = d.getFullYear();
+      const hours = String(d.getHours()).padStart(2, "0");
+      const mins = String(d.getMinutes()).padStart(2, "0");
+      return `${day}/${month}/${year} ${hours}:${mins}`;
+    }
+
+    document.getElementById("sendButton").addEventListener("click", () => {
+      const textarea = document.getElementById("messageInput");
+      let text = textarea.value.trim();
+      if (!text) return;
+      text = censor(text);
+      const now = new Date();
+      const comment = {
+        text,
+        date: formatDate(now)
+      };
+      const comments = loadComments();
+      comments.unshift(comment);
+      saveComments(comments);
+      textarea.value = "";
+      renderComments();
+    });
+
+    renderComments();
+  </script>
+</body>
+</html>
