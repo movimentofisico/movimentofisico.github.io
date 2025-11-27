@@ -1,1 +1,93 @@
+UMANA
+      </footer>
+    </div>
+  </main>
 
+  <script>
+    // ATTENZIONE IMPORTANTE:
+    // Senza un server o servizio esterno, questi messaggi vengono salvati
+    // solo nel browser di chi visita (localStorage). Servono per dare l'esperienza
+    // di "scrivere" e "leggere", ma non sono ancora condivisi tra persone diverse.
+    // In futuro si può collegare a un backend reale per renderli globali.
+
+    const badWords = [
+      "cazzo","cazzi","merda","stronzo","stronzi","troia","troie","puttana","puttane",
+      "vaffanculo","vaffanulo","coglione","coglioni","testa di cazzo","bastardo","bastardi"
+    ];
+
+    const STORAGE_KEY = "mf_commenti_anonimi_v1";
+
+    function censor(text) {
+      let censored = text;
+      badWords.forEach(word => {
+        const pattern = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+        censored = censored.replace(pattern, match => "*".repeat(match.length));
+      });
+      return censored;
+    }
+
+    function loadComments() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        return JSON.parse(raw);
+      } catch (e) {
+        console.error("Errore nel leggere i commenti", e);
+        return [];
+      }
+    }
+
+    function saveComments(comments) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
+      } catch (e) {
+        console.error("Errore nel salvare i commenti", e);
+      }
+    }
+
+    function renderComments() {
+      const list = document.getElementById("commentsList");
+      list.innerHTML = "";
+      const comments = loadComments();
+      comments.forEach(comment => {
+        const div = document.createElement("div");
+        div.className = "comment";
+        div.textContent = comment.text;
+        const time = document.createElement("time");
+        time.textContent = comment.date;
+        div.appendChild(time);
+        list.appendChild(div);
+      });
+    }
+
+    function formatDate(d) {
+      const day = String(d.getDate()).padStart(2, "0");
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const year = d.getFullYear();
+      const hours = String(d.getHours()).padStart(2, "0");
+      const mins = String(d.getMinutes()).padStart(2, "0");
+      return `${day}/${month}/${year} ${hours}:${mins}`;
+    }
+
+    document.getElementById("sendButton").addEventListener("click", () => {
+      const textarea = document.getElementById("messageInput");
+      let text = textarea.value.trim();
+      if (!text) return;
+      text = censor(text);
+      const now = new Date();
+      const comment = {
+        text,
+        date: formatDate(now)
+      };
+      const comments = loadComments();
+      comments.unshift(comment);
+      saveComments(comments);
+      textarea.value = "";
+      renderComments();
+    });
+
+    // Render iniziale
+    renderComments();
+  </script>
+</body>
+</html>
